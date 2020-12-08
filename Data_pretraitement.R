@@ -1,10 +1,14 @@
 ####install et charger les packages####
-# install.packages("xml2")
-# install.packages("stringr")
-# install.packages("svMisc")
-# install.packages("udpipe")
-# install.packages("quanteda")
-# install.packages("dplyr")
+list.of.packages <- c("udpipe", "dplyr", "xml2", "stringr", "quanteda","svMisc")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos = "http://cran.rstudio.com/")
+
+# set working directory
+this.dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
+setwd(this.dir)
+rm(list=ls())
+
+# load libraries
 library(udpipe)
 library(dplyr)
 library(xml2)
@@ -324,12 +328,14 @@ length(iob.word)
 length(iob.label)
 #longueur de vecteur identifiant document
 length(doc_id)
-#il faut que iob.word et  aient de meme longueur = 497668
+#il faut que iob.word et  aient de meme longueur = 497894
 
 names(iob.word) <- "word"
 names(iob.label) <- 'label'
 
-write.table(iob.word, "iob_word.var")
-write.table(iob.label, "iob_label.var")
-write.table(doc_id, "doc_id.var")
+# write.table(iob.word, "iob_word.var")
+# write.table(iob.label, "iob_label.var")
+# write.table(doc_id, "doc_id.var")
 
+# Enregistrer sus forme RData
+# save(iob.label,iob.word,doc_id,file="data/word_label_id.RData")
